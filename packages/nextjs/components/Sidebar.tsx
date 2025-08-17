@@ -97,7 +97,7 @@ const Sidebar = ({ isExpanded, isMobile = false, toggleSidebar }: SidebarProps) 
       {/* Desktop sidebar */}
       {!isMobile && (
         <div
-          className={`${isExpanded ? "w-48" : "w-20"} glass-subtle bg-base-100/90 backdrop-blur-lg shadow-xl min-h-screen transition-all duration-300 ease-in-out relative border-r border-base-content/20`}
+          className={`fixed top-0 left-0 ${isExpanded ? "w-48" : "w-20"} glass-subtle bg-base-100/90 backdrop-blur-lg shadow-xl min-h-screen transition-all duration-300 ease-in-out relative border-r border-base-content/20`}
         >
           {/* Toggle button for desktop */}
           <button
