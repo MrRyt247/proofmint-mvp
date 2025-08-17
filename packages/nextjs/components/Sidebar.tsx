@@ -33,9 +33,11 @@ const Sidebar = ({ isExpanded, isMobile = false, toggleSidebar }: SidebarProps) 
     { href: "/settings", icon: CogIcon, label: "Settings" },
   ];
 
+  // For screens wider than 720px, we show the desktop sidebar
+  // For screens narrower than 720px, we show the mobile sidebar when isMobile is true
   return (
     <>
-      {/* Mobile sidebar */}
+      {/* Mobile sidebar - only shown when isMobile is true and screen is small */}
       {isMobile && (
         <div className="fixed inset-y-0 left-0 z-40 lg:hidden">
           <div
@@ -94,49 +96,46 @@ const Sidebar = ({ isExpanded, isMobile = false, toggleSidebar }: SidebarProps) 
         </div>
       )}
 
-      {/* Desktop sidebar */}
-      {!isMobile && (
-        <div
-          className={`fixed top-0 left-0 ${isExpanded ? "w-48" : "w-20"} glass-subtle bg-base-100/90 backdrop-blur-lg shadow-xl min-h-screen transition-all duration-300 ease-in-out relative border-r border-base-content/20`}
+      {/* 
+        Desktop sidebar - shown on screens wider than 720px
+        On smaller screens, this will be hidden by CSS unless explicitly needed
+      */}
+      <div
+        className={`hidden md:block fixed top-0 left-0 ${isExpanded ? "w-48" : "w-20"} glass-subtle bg-base-100/90 backdrop-blur-lg shadow-xl min-h-screen transition-all duration-300 ease-in-out relative border-r border-base-content/20`}
+      >
+        {/* Toggle button for desktop */}
+        <button
+          onClick={toggleSidebar}
+          className="absolute -right-4 top-8 bg-primary hover:bg-accent text-primary-content rounded-full p-2 shadow-lg transition-colors z-10"
         >
-          {/* Toggle button for desktop */}
-          <button
-            onClick={toggleSidebar}
-            className="absolute -right-4 top-8 bg-primary hover:bg-accent text-primary-content rounded-full p-2 shadow-lg transition-colors z-10"
-          >
-            {isExpanded ? (
-              <ChevronDoubleLeftIcon className="w-4 h-4" />
-            ) : (
-              <ChevronDoubleRightIcon className="w-4 h-4" />
-            )}
-          </button>
+          {isExpanded ? <ChevronDoubleLeftIcon className="w-4 h-4" /> : <ChevronDoubleRightIcon className="w-4 h-4" />}
+        </button>
 
-          <nav className="mt-1.5">
-            {navItems.map(item => {
-              const Icon = item.icon;
-              const isActive = pathname === item.href;
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`flex items-center ${isExpanded ? "px-6" : "px-4 justify-center"} py-3 text-base-content hover:bg-base-200/50 hover:text-base-content relative group ${
-                    isActive ? "bg-primary/10 text-base-content border-r-2 border-primary" : ""
-                  }`}
-                  title={!isExpanded ? item.label : ""}
-                >
-                  <Icon className="w-5 h-5 flex-shrink-0" />
-                  {isExpanded && <span className="ml-3">{item.label}</span>}
-                  {!isExpanded && (
-                    <span className="absolute left-full ml-2 px-2 py-1 bg-base-300 text-base-content text-sm rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-50">
-                      {item.label}
-                    </span>
-                  )}
-                </Link>
-              );
-            })}
-          </nav>
-        </div>
-      )}
+        <nav className="mt-1.5">
+          {navItems.map(item => {
+            const Icon = item.icon;
+            const isActive = pathname === item.href;
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`flex items-center ${isExpanded ? "px-6" : "px-4 justify-center"} py-3 text-base-content hover:bg-base-200/50 hover:text-base-content relative group ${
+                  isActive ? "bg-primary/10 text-base-content border-r-2 border-primary" : ""
+                }`}
+                title={!isExpanded ? item.label : ""}
+              >
+                <Icon className="w-5 h-5 flex-shrink-0" />
+                {isExpanded && <span className="ml-3">{item.label}</span>}
+                {!isExpanded && (
+                  <span className="absolute left-full ml-2 px-2 py-1 bg-base-300 text-base-content text-sm rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-50">
+                    {item.label}
+                  </span>
+                )}
+              </Link>
+            );
+          })}
+        </nav>
+      </div>
     </>
   );
 };

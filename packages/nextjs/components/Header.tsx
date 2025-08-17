@@ -73,7 +73,7 @@ export const Header = () => {
           <button className="ml-1 btn btn-ghost lg:hidden hover:bg-transparent" onClick={toggleSidebar}>
             <Bars3Icon className="h-1/2" />
           </button>
-          <Link href="/" passHref className="hidden lg:flex items-center gap-2 ml-4 mr-6 shrink-0">
+          <Link href="/" passHref className="hidden sm:flex items-center gap-2 ml-4 mr-6 shrink-0">
             <div className="flex items-center">
               <Image src="/Logo_coloured-outline.svg" alt="ProofMint" width={32} height={32} className="mr-2" />
               <span className="text-xl font-bold">
@@ -82,7 +82,7 @@ export const Header = () => {
               </span>
             </div>
           </Link>
-          <ul className="hidden lg:flex lg:flex-nowrap menu menu-horizontal px-1 gap-2">
+          <ul className="hidden sm:flex lg:flex-nowrap menu menu-horizontal px-1 gap-2">
             <HeaderMenuLinks />
           </ul>
         </div>
